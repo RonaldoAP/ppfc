@@ -29,7 +29,7 @@
           <input
             type="text"
             id="name-input"
-            placeholder="Digite seu nome completo"
+            placeholder="Escreva seu nome"
             maxlength="60"
             autocomplete="name"
             required
@@ -43,20 +43,22 @@
     <section id="step-voting" class="step hidden">
       <div class="voter-tag">Votando como: <strong id="voter-name-display"></strong></div>
 
-      <div class="color-group group-blue">
-        <div class="group-header">
-          <span class="dot dot-blue"></span>
-          Uniformes Azuis — escolha 1
+      <div class="uniforms-groups">
+        <div class="color-group group-blue">
+          <div class="group-header">
+            <span class="dot dot-blue"></span>
+            Uniformes Azuis — escolha 1
+          </div>
+          <div class="uniforms-row" id="row-blue"></div>
         </div>
-        <div class="uniforms-row" id="row-blue"></div>
-      </div>
 
-      <div class="color-group group-red">
-        <div class="group-header">
-          <span class="dot dot-red"></span>
-          Uniformes Vermelhos — escolha 1
+        <div class="color-group group-red">
+          <div class="group-header">
+            <span class="dot dot-red"></span>
+            Uniformes Vermelhos — escolha 1
+          </div>
+          <div class="uniforms-row" id="row-red"></div>
         </div>
-        <div class="uniforms-row" id="row-red"></div>
       </div>
 
       <div class="confirm-bar">

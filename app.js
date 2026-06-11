@@ -16,10 +16,10 @@ const firebaseConfig = {
 // UNIFORMES — edite nomes, descrições e caminhos de imagem
 // ─────────────────────────────────────────────────────────────
 const UNIFORMS = [
-  { id: "azul_1",     name: "Azul — Gola Branca",       color: "blue", emoji: "🔵", img: "AZUL 01.png"    },
-  { id: "azul_2",     name: "Azul — Gola Preta",        color: "blue", emoji: "💙", img: "AZUL 2.png"     },
-  { id: "vermelho_1", name: "Listrado — Preto/Vermelho", color: "red",  emoji: "🔴", img: "VERMELHA 1.png" },
-  { id: "vermelho_2", name: "Listrado — Vermelho/Preto", color: "red",  emoji: "❤️", img: "VERMELHA 2.png" },
+  { id: "azul_1",     name: "Azul — Gola Branca",       color: "blue", emoji: "🔵", img: "azul_01.jpg"    },
+  { id: "azul_2",     name: "Azul — Gola Preta",        color: "blue", emoji: "💙", img: "azul_02.jpg"    },
+  { id: "vermelho_1", name: "Listrado — Preto/Vermelho", color: "red",  emoji: "🔴", img: "vermelha_01.jpg" },
+  { id: "vermelho_2", name: "Listrado — Vermelho/Preto", color: "red",  emoji: "❤️", img: "vermelha_02.jpg" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -227,6 +227,7 @@ function renderRanking(counts) {
       <div class="rank-item${isTop ? " top" : ""}">
         <div class="rank-header">
           <span class="rank-pos">${medals[i]}</span>
+          <img class="rank-thumb" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'" />
           <span class="rank-name">${u.name}${userVoted ? " <em style='font-size:11px;font-weight:400;opacity:.7'>(seu voto)</em>" : ""}</span>
           <span class="rank-votes">${u.votes} voto${u.votes !== 1 ? "s" : ""} · ${pct}%</span>
         </div>

@@ -121,7 +121,15 @@ body {
 }
 .voter-tag strong { color: var(--text); }
 
-.color-group { margin-bottom: 36px; }
+/* ── Groups wrapper: side-by-side on desktop ─── */
+.uniforms-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.color-group { margin-bottom: 0; }
 
 .group-header {
   display: flex;
@@ -268,6 +276,13 @@ body {
   margin-bottom: 10px;
 }
 .rank-pos   { font-size: 22px; width: 36px; text-align: center; flex-shrink: 0; }
+.rank-thumb {
+  width: 44px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
 .rank-name  { font-size: 15px; font-weight: 700; flex: 1; }
 .rank-votes { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
@@ -300,8 +315,9 @@ body {
 }
 
 /* ── Responsive ─────────────────────────────── */
-@media (max-width: 600px) {
-  .confirm-bar { flex-direction: column; align-items: stretch; gap: 10px; }
-  .btn-confirm { width: 100%; }
-  .name-card   { padding: 28px 20px; }
+@media (max-width: 700px) {
+  .uniforms-groups { grid-template-columns: 1fr; gap: 24px; }
+  .confirm-bar     { flex-direction: column; align-items: stretch; gap: 10px; }
+  .btn-confirm     { width: 100%; }
+  .name-card       { padding: 28px 20px; }
 }
