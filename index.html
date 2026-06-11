@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PPFC — Vote no Melhor Uniforme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <span class="club-badge">⚽ PPFC</span>
+      <h1>Vote no Melhor Uniforme</h1>
+      <p class="subtitle">Escolha 1 azul e 1 vermelho — sua opinião vale!</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PASSO 1: Nome -->
+    <section id="step-name" class="step">
+      <div class="name-card">
+        <h2>Como você se chama?</h2>
+        <p>Seu nome será exibido no ranking público de votações.</p>
+        <form id="name-form">
+          <input
+            type="text"
+            id="name-input"
+            placeholder="Digite seu nome completo"
+            maxlength="60"
+            autocomplete="name"
+            required
+          />
+          <button type="submit" class="btn-primary">Continuar →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PASSO 2: Votação -->
+    <section id="step-voting" class="step hidden">
+      <div class="voter-tag">Votando como: <strong id="voter-name-display"></strong></div>
+
+      <div class="color-group group-blue">
+        <div class="group-header">
+          <span class="dot dot-blue"></span>
+          Uniformes Azuis — escolha 1
+        </div>
+        <div class="uniforms-row" id="row-blue"></div>
+      </div>
+
+      <div class="color-group group-red">
+        <div class="group-header">
+          <span class="dot dot-red"></span>
+          Uniformes Vermelhos — escolha 1
+        </div>
+        <div class="uniforms-row" id="row-red"></div>
+      </div>
+
+      <div class="confirm-bar">
+        <p id="selection-summary" class="selection-summary">Selecione um uniforme de cada cor para continuar.</p>
+        <button id="btn-confirm" class="btn-primary btn-confirm" disabled>
+          Confirmar votos
+        </button>
+      </div>
+    </section>
+
+    <!-- PASSO 3: Votado + Ranking -->
+    <section id="step-voted" class="step hidden">
+      <div class="voted-banner">
+        <div class="voted-icon">✅</div>
+        <h2>Voto registrado!</h2>
+        <p id="voted-summary-text"></p>
+      </div>
+
+      <div class="ranking-section">
+        <h2>🏆 Ranking ao Vivo</h2>
+        <div id="ranking-list">
+          <div class="rank-loading">Carregando resultados...</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>PPFC &copy; 2026 · Votação em tempo real</p>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
