@@ -16,10 +16,10 @@ const firebaseConfig = {
 // UNIFORMES — edite nomes, descrições e caminhos de imagem
 // ─────────────────────────────────────────────────────────────
 const UNIFORMS = [
-  { id: "azul_1",     name: "Uniforme Azul 1",     color: "blue", emoji: "🔵", img: "img/azul_1.jpg"     },
-  { id: "azul_2",     name: "Uniforme Azul 2",     color: "blue", emoji: "💙", img: "img/azul_2.jpg"     },
-  { id: "vermelho_1", name: "Uniforme Vermelho 1", color: "red",  emoji: "🔴", img: "img/vermelho_1.jpg" },
-  { id: "vermelho_2", name: "Uniforme Vermelho 2", color: "red",  emoji: "❤️", img: "img/vermelho_2.jpg" },
+  { id: "azul_1",     name: "Azul — Gola Branca",       color: "blue", emoji: "🔵", img: "img/azul_1.jpg"     },
+  { id: "azul_2",     name: "Azul — Gola Preta",        color: "blue", emoji: "💙", img: "img/azul_2.jpg"     },
+  { id: "vermelho_1", name: "Listrado — Preto/Vermelho", color: "red",  emoji: "🔴", img: "img/vermelho_1.jpg" },
+  { id: "vermelho_2", name: "Listrado — Vermelho/Preto", color: "red",  emoji: "❤️", img: "img/vermelho_2.jpg" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -108,28 +108,25 @@ function pickUniform(id) {
   const uniform = UNIFORMS.find(u => u.id === id);
   if (!uniform) return;
 
-  if (uniform.color === "blue") {
-    if (selectedBlue) return; // já escolheu nessa cor, bloqueado
-    selectedBlue = id;
-    lockGroup("blue", id);
-  } else {
-    if (selectedRed) return;
-    selectedRed = id;
-    lockGroup("red", id);
+  const isBlue  = uniform.color === "blue";
+  const current = isBlue ? selectedBlue : selectedRed;
+
+  if (current) {
+    document.getElementById(`card-${current}`)?.classList.remove("selected");
   }
 
-  document.getElementById(`card-${id}`)?.classList.add("selected");
-  updateSummary();
-}
+  if (current === id) {
+    // Clicou no mesmo card → desfaz seleção
+    if (isBlue) selectedBlue = null;
+    else        selectedRed  = null;
+  } else {
+    // Seleciona novo card
+    if (isBlue) selectedBlue = id;
+    else        selectedRed  = id;
+    document.getElementById(`card-${id}`)?.classList.add("selected");
+  }
 
-function lockGroup(color, selectedId) {
-  // Marca todos os cards daquele grupo como locked
-  UNIFORMS
-    .filter(u => u.color === color)
-    .forEach(u => {
-      const card = document.getElementById(`card-${u.id}`);
-      if (card) card.classList.add("locked");
-    });
+  updateSummary();
 }
 
 function updateSummary() {
