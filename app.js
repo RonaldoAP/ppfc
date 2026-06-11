@@ -16,10 +16,10 @@ const firebaseConfig = {
 // UNIFORMES — edite nomes, descrições e caminhos de imagem
 // ─────────────────────────────────────────────────────────────
 const UNIFORMS = [
-  { id: "azul_1",     name: "Azul — Gola Branca",       color: "blue", emoji: "🔵", img: "img/azul_1.jpg"     },
-  { id: "azul_2",     name: "Azul — Gola Preta",        color: "blue", emoji: "💙", img: "img/azul_2.jpg"     },
-  { id: "vermelho_1", name: "Listrado — Preto/Vermelho", color: "red",  emoji: "🔴", img: "img/vermelho_1.jpg" },
-  { id: "vermelho_2", name: "Listrado — Vermelho/Preto", color: "red",  emoji: "❤️", img: "img/vermelho_2.jpg" },
+  { id: "azul_1",     name: "Azul — Gola Branca",       color: "blue", emoji: "🔵", img: "AZUL 01.png"    },
+  { id: "azul_2",     name: "Azul — Gola Preta",        color: "blue", emoji: "💙", img: "AZUL 2.png"     },
+  { id: "vermelho_1", name: "Listrado — Preto/Vermelho", color: "red",  emoji: "🔴", img: "VERMELHA 1.png" },
+  { id: "vermelho_2", name: "Listrado — Vermelho/Preto", color: "red",  emoji: "❤️", img: "VERMELHA 2.png" },
 ];
 
 // ─────────────────────────────────────────────────────────────
