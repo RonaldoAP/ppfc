@@ -3,13 +3,13 @@
 // Substitua pelos dados do seu projeto em console.firebase.google.com
 // ─────────────────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey:            "COLE_AQUI_SUA_API_KEY",
-  authDomain:        "SEU_PROJETO.firebaseapp.com",
-  databaseURL:       "https://SEU_PROJETO-default-rtdb.firebaseio.com",
-  projectId:         "SEU_PROJETO",
-  storageBucket:     "SEU_PROJETO.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID",
-  appId:             "SEU_APP_ID",
+  apiKey:            "AIzaSyD87An_tilOqKznmHcWAOzGIpkTEkUCnhY",
+  authDomain:        "ppfc-uniformes.firebaseapp.com",
+  databaseURL:       "https://ppfc-uniformes-default-rtdb.firebaseio.com",
+  projectId:         "ppfc-uniformes",
+  storageBucket:     "ppfc-uniformes.firebasestorage.app",
+  messagingSenderId: "570179377619",
+  appId:             "1:570179377619:web:46dc461ced8db952b8f726",
 };
 
 // ─────────────────────────────────────────────────────────────
