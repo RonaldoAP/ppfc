@@ -222,33 +222,69 @@ function renderRanking(votersData) {
     .map(u => ({ ...u, votes: byUniform[u.id].length, voters: byUniform[u.id] }))
     .sort((a, b) => b.votes - a.votes || a.name.localeCompare(b.name));
 
-  const total  = sorted.reduce((s, u) => s + u.votes, 0);
-  const maxV   = sorted[0]?.votes || 0;
-  const medals = ["🥇", "🥈", "🥉", "4️⃣"];
+  // Pódio: 2º esquerda · 1º centro · 3º direita
+  const slots    = [sorted[1], sorted[0], sorted[2]];
+  const positions = [2, 1, 3];
+  const badgeCls  = ["badge-silver", "badge-gold", "badge-bronze"];
+  const fourth    = sorted[3];
 
-  document.getElementById("ranking-list").innerHTML = sorted.map((u, i) => {
-    const pct        = total > 0 ? Math.round((u.votes / total) * 100) : 0;
-    const isTop      = u.votes > 0 && u.votes === maxV;
-    const colorClass = u.color === "blue" ? "bar-blue" : "bar-red";
-    const userVoted  = voteData?.blue === u.id || voteData?.red === u.id;
-    const namesHtml  = u.voters.length > 0
-      ? `<div class="rank-voters">${u.voters.join(" · ")}</div>`
-      : '';
-
+  function dropdownHtml(uid, names) {
+    const text = names.length > 0 ? names.join(" · ") : "Ninguém ainda";
     return `
-      <div class="rank-item${isTop ? " top" : ""}">
+      <button class="voters-toggle" data-target="vd-${uid}">Quem votou? ▾</button>
+      <div class="voters-dropdown" id="vd-${uid}">${text}</div>`;
+  }
+
+  const podiumHtml = `
+    <div class="podium">
+      ${slots.map((u, idx) => {
+        const pos = positions[idx];
+        const userVoted = voteData?.blue === u.id || voteData?.red === u.id;
+        return `
+          <div class="podium-item place-${pos}">
+            <div class="podium-top">
+              ${pos === 1 ? '<div class="podium-crown">👑</div>' : '<div class="podium-crown-gap"></div>'}
+              <div class="podium-photo ${u.color === 'blue' ? 'ring-blue' : 'ring-red'}">
+                <img src="${u.img}" alt="${u.name}" onerror="this.style.display='none'" />
+                <span class="podium-badge ${badgeCls[idx]}">${pos}</span>
+              </div>
+              <div class="podium-name">${u.name}${userVoted ? '<br><em class="your-vote">seu voto ✓</em>' : ''}</div>
+              <div class="podium-votes">${u.votes}<span> voto${u.votes !== 1 ? 's' : ''}</span></div>
+              ${dropdownHtml(u.id, u.voters)}
+            </div>
+            <div class="podium-step"></div>
+          </div>`;
+      }).join("")}
+    </div>`;
+
+  const fourthHtml = fourth ? (() => {
+    const total = sorted.reduce((s, x) => s + x.votes, 0);
+    const pct   = total > 0 ? Math.round((fourth.votes / total) * 100) : 0;
+    const colorClass = fourth.color === "blue" ? "bar-blue" : "bar-red";
+    const userVoted  = voteData?.blue === fourth.id || voteData?.red === fourth.id;
+    return `
+      <div class="rank-item">
         <div class="rank-header">
-          <span class="rank-pos">${medals[i]}</span>
-          <img class="rank-thumb" src="${u.img}" alt="${u.name}" onerror="this.style.display='none'" />
-          <span class="rank-name">${u.name}${userVoted ? " <em style='font-size:11px;font-weight:400;opacity:.7'>(seu voto)</em>" : ""}</span>
-          <span class="rank-votes">${u.votes} voto${u.votes !== 1 ? "s" : ""} · ${pct}%</span>
+          <span class="rank-pos">4️⃣</span>
+          <img class="rank-thumb" src="${fourth.img}" alt="${fourth.name}" onerror="this.style.display='none'" />
+          <span class="rank-name">${fourth.name}${userVoted ? " <em style='font-size:11px;font-weight:400;opacity:.7'>(seu voto)</em>" : ""}</span>
+          <span class="rank-votes">${fourth.votes} voto${fourth.votes !== 1 ? "s" : ""} · ${pct}%</span>
         </div>
-        <div class="rank-bar-bg">
-          <div class="rank-bar ${colorClass}" style="width:${pct}%"></div>
-        </div>
-        ${namesHtml}
+        <div class="rank-bar-bg"><div class="rank-bar ${colorClass}" style="width:${pct}%"></div></div>
+        ${dropdownHtml(fourth.id, fourth.voters)}
       </div>`;
-  }).join("");
+  })() : '';
+
+  const container = document.getElementById("ranking-list");
+  container.innerHTML = podiumHtml + fourthHtml;
+
+  container.querySelectorAll(".voters-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      const open   = target.classList.toggle("open");
+      btn.textContent = open ? "Fechar ▴" : "Quem votou? ▾";
+    });
+  });
 }
 
 // ─────────────────────────────────────────────────────────────
