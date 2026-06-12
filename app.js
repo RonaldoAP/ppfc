@@ -205,12 +205,21 @@ function listenToRanking() {
       '<p style="color:var(--muted)">Firebase não configurado.</p>';
     return;
   }
-  db.ref("votes").on("value", snap => renderRanking(snap.val() || {}));
+  db.ref("voters").on("value", snap => renderRanking(snap.val() || {}));
 }
 
-function renderRanking(counts) {
+function renderRanking(votersData) {
+  const votersList = Object.values(votersData);
+
+  const byUniform = {};
+  UNIFORMS.forEach(u => { byUniform[u.id] = []; });
+  votersList.forEach(v => {
+    if (v.blue && byUniform[v.blue] !== undefined) byUniform[v.blue].push(v.name);
+    if (v.red  && byUniform[v.red]  !== undefined) byUniform[v.red].push(v.name);
+  });
+
   const sorted = [...UNIFORMS]
-    .map(u => ({ ...u, votes: counts[u.id] || 0 }))
+    .map(u => ({ ...u, votes: byUniform[u.id].length, voters: byUniform[u.id] }))
     .sort((a, b) => b.votes - a.votes || a.name.localeCompare(b.name));
 
   const total  = sorted.reduce((s, u) => s + u.votes, 0);
@@ -222,6 +231,9 @@ function renderRanking(counts) {
     const isTop      = u.votes > 0 && u.votes === maxV;
     const colorClass = u.color === "blue" ? "bar-blue" : "bar-red";
     const userVoted  = voteData?.blue === u.id || voteData?.red === u.id;
+    const namesHtml  = u.voters.length > 0
+      ? `<div class="rank-voters">${u.voters.join(" · ")}</div>`
+      : '';
 
     return `
       <div class="rank-item${isTop ? " top" : ""}">
@@ -234,6 +246,7 @@ function renderRanking(counts) {
         <div class="rank-bar-bg">
           <div class="rank-bar ${colorClass}" style="width:${pct}%"></div>
         </div>
+        ${namesHtml}
       </div>`;
   }).join("");
 }
